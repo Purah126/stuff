@@ -1,8 +1,9 @@
 
 ''' TCP (socket module) API! 
-Accepts both IPv4 and IPv6 addresses'''
+Accepts both IPv4 and IPv6 addresses
+Never use 0x7F in messages'''
 
-__all__ = ['client', 'server', 'DONE']
+__all__ = ['client', 'server', 'DONE', 'STOP']
 
 DONE = 'STOP THE CONNECTION PLEASE PLEASE PLEASE'
 STOP = 'MAKE THE SCREEN STOP HANGING PLEASE PLEASE PLEASE'
@@ -38,7 +39,7 @@ def client(ip, port, func, start=None, encoding='utf-8'):
             new = func(data.d)
             if new == DONE:
                 break
-            s.sendall(new.encode(encoding))
+            s.sendall((new + chr(0x7F).encode(encoding))
 
 def server(port, func, start=None, ipv6=True, encoding='utf-8'):
     '''TCP server, will block forever unless func returns tcp.STOP, func is function that takes in 
@@ -55,8 +56,16 @@ def server(port, func, start=None, ipv6=True, encoding='utf-8'):
                     raise ValueError('Cannot stop on first connection')
             while True:
                 while True:
-                    data = s.recv(1024)
-                    if not data:
+                    nbyte = 'x'
+                    data = b''
+                    stop = False
+                    while nbyte != chr(0x7F):
+                        nbyte = s.recv(1)
+                        if nbyte == b'':
+                            stop = True
+                            break
+                        data += nbyte
+                    if stop:
                         break
                     data = data.decode(encoding)
                     if data == '':
