@@ -53,16 +53,3 @@ class CacheFunc:
             x = self.func(*args, **kwargs)
             cache[ak] = x
             return x
-
-
-
-
-
-
-
-
-
-
-
-
-
