@@ -156,6 +156,7 @@ class Tag:
     def delete(self):
         if not hasattr(self, c):
             raise ValueError('Cannot delete tag that has always been empty')
+        self.c.delete(self.name)
     
     def remove(self, other):
         other.c.dtag(other.num, self.name)
