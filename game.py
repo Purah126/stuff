@@ -159,17 +159,3 @@ class Tag:
     
     def remove(self, other):
         other.c.dtag(other.num, self.name)
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-
