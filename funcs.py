@@ -53,3 +53,9 @@ class CacheFunc:
             x = self.func(*args, **kwargs)
             cache[ak] = x
             return x
+
+def chain(value, *funcs):
+    '''chain a value through functions'''
+    for func in funcs:
+        value = func(value)
+    return value
