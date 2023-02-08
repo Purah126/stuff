@@ -99,8 +99,16 @@ def inp():
 
 @handle
 def inp_block(flag):
+    '''change whether input blocks'''
     curses.nodelay(flag)
     
 def mouse():
+    '''get coords of mouse'''
     x = curses.getmouse()
     return (x[1], x[2])
+
+def getch(x, y):
+    '''get character at (x, y), returns character and attribute'''
+    global s
+    c = s.inch(y, x)
+    return (c % 256), (c >> 8)
