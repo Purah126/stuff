@@ -44,6 +44,11 @@ def handle(func):
             stop()
             raise e
 
+ @handle
+def beep():
+    '''cause beep sound'''
+    curses.beep()
+          
 @handle
 def clear():
     '''clear window'''
