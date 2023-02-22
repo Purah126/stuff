@@ -74,7 +74,7 @@ def getf(bg=None, fg=None, blink=False, bold=False, dim=False, \
     d = curses.A_REVERSE if reverse else 0
     e = curses.A_STANDOUT if highlight else 0
     f = curses.A_UNDERLINE if ul else 0
-    return curses.get_color(bg + (fg * 8) ^ a ^ b ^ c ^ d ^ e ^ f)    
+    return curses.get_color(bg) + (fg * 8) ^ a ^ b ^ c ^ d ^ e ^ f
 
 @handle
 def draw(t, x=None, y=None, f=None):
